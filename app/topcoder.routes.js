@@ -54,7 +54,7 @@
         },
         views: {
           'header@': {
-            templateUrl: 'layout/header/header.html',
+            template: require('./layout/header/header')(),
             controller: 'HeaderController',
             controllerAs: 'vm'
           },
@@ -62,7 +62,7 @@
             template: "<div ui-view></div>"
           },
           'footer@': {
-            templateUrl: 'layout/footer/footer.html',
+            template: require('./layout/footer/footer')(),
             controller: ['$scope', 'CONSTANTS', function($scope, CONSTANTS) {
               $scope.domain = CONSTANTS.domain;
             }]
