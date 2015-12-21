@@ -7,7 +7,7 @@
     return {
       restrict: 'E',
       require: '^form',
-      templateUrl: 'directives/account/toggle-password-with-tips/toggle-password-with-tips.html',
+      template: require('./toggle-password-with-tips')(),
       link: function(scope, element, attrs, formController) {
         var vm = scope.vm;
         vm.passwordField = formController.password;

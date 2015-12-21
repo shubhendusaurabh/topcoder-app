@@ -7,7 +7,7 @@
   function challengeTile() {
     return {
       restrict: 'E',
-      templateUrl: 'directives/challenge-tile/challenge-tile.directive.html',
+      template: require('./challenge-tile')(),
       scope: {
         challenge: '=',
         view: '='

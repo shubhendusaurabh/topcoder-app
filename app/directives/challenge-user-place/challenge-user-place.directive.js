@@ -8,7 +8,7 @@
   function devChallengeUserPlace() {
     return {
       restrict: 'E',
-      templateUrl: 'directives/challenge-user-place/dev-challenge-user-place.directive.html',
+      template: require('./dev-challenge-user-place')(),
       scope: {
         challenge: '=',
         view: '='
@@ -28,7 +28,7 @@
   function designChallengeUserPlace() {
     return {
       restrict: 'E',
-      templateUrl: 'directives/challenge-user-place/design-challenge-user-place.directive.html',
+      template: require('./design-challenge-user-place')(),
       scope: {
         challenge: '=',
         view: '='
@@ -81,7 +81,7 @@
 
         function openLightbox() {
           ngDialog.open({
-            template: 'directives/challenge-user-place/design-lightbox/design-lightbox.html',
+            template: './design-lightbox/design-lightbox',
             className: 'design-lightbox',
             scope: $scope
           });

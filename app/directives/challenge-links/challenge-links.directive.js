@@ -5,7 +5,7 @@
       restrict: 'E',
       transclude: false,
       replace: true,
-      templateUrl: 'directives/challenge-links/challenge-links.directive.html',
+      template: require('./challenge-links')(),
       scope: {
         challenge: '=',
         view: '='

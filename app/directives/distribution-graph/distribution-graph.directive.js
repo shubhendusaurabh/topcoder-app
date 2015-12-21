@@ -6,9 +6,7 @@
   function distributionGraph() {
     return {
       restrict: 'E',
-      templateUrl: function(elem, attrs) {
-        return 'directives/distribution-graph/distribution-graph.directive.html';
-      },
+      template: require('./distribution-graph')(),
       scope: {
         promise: '=',
         rating: '=',

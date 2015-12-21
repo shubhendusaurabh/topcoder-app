@@ -4,7 +4,7 @@
 
     return {
       restrict: 'E',
-      templateUrl: 'directives/header/header-menu-item.directive.html',
+      template: require('./header-menu-item')(),
       scope: {
         item: '='
       },

@@ -7,7 +7,7 @@
     return {
       restrict: 'E',
       require: '^form',
-      templateUrl: 'directives/account/toggle-password/toggle-password.html',
+      template: require('./toggle-password')(),
       link: function(scope, element, attrs, formController) {
         var vm = scope.vm;
         scope.currentPasswordDefaultPlaceholder = attrs.placeholder || 'Password';

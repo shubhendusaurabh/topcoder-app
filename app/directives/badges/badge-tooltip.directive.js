@@ -10,7 +10,7 @@
   function badgeTooltip() {
     return {
       restrict: 'A',
-      templateUrl: 'directives/badges/badge-tooltip.html',
+      template: require('./badge-tooltip')(),
       scope: {
         badge: '='
       },
