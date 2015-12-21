@@ -26,8 +26,4 @@
       })
 
     }])
-    .factory('UserPrefStore', ['store', function(store) {
-      return store.getNamespacedStore('userSettings');
-    }]);
-
 })();
