@@ -1,52 +1,46 @@
 'use strict';
 
 // Modules
-var path = require('path');
 var webpack = require('webpack');
+var autoprefixer = require('autoprefixer');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var path = require('path');
 
 module.exports = function makeWebpackConfig(options) {
-  /**
-   * Environment type
-   * BUILD is for generating minified builds
-   * TEST is for generating test builds
-   */
+   // Environment type
+   // BUILD is for generating minified builds
+   // TEST is for generating test builds
   var BUILD = !!options.BUILD;
   var TEST = !!options.TEST;
 
-  /**
-   * Config
-   * Reference: http://webpack.github.io/docs/configuration.html
-   * This is the object where all configuration gets set
-   */
+   // Config
+   // Reference: http://webpack.github.io/docs/configuration.html
+   // This is the object where all configuration gets set
   var config = {};
 
-  /**
-   * Entry
-   * Reference: http://webpack.github.io/docs/configuration.html#entry
-   * Should be an empty object if it's generating a test build
-   * Karma will set this when it's a test build
-   */
+   // Entry
+   // Reference: http://webpack.github.io/docs/configuration.html#entry
+   // Should be an empty object if it's generating a test build
+   // Karma will set this when it's a test build
   if (TEST) {
     config.entry = {}
   } else {
     config.entry = {
-      app: './app/index.js'
+      app: './app/app.js',
+      vendor: './app/index.js'
     }
   }
 
-  /**
-   * Output
-   * Reference: http://webpack.github.io/docs/configuration.html#output
-   * Should be an empty object if it's generating a test build
-   * Karma will handle setting it up for you when it's a test build
-   */
+   // Output
+   // Reference: http://webpack.github.io/docs/configuration.html#output
+   // Should be an empty object if it's generating a test build
+   // Karma will handle setting it up for you when it's a test build
   if (TEST) {
     config.output = {}
   } else {
     config.output = {
       // Absolute output directory
-      path: __dirname + '/build',
+      path: './build',
 
       // Output path from the view of the page
       // Uses webpack-dev-server in development
@@ -62,11 +56,9 @@ module.exports = function makeWebpackConfig(options) {
     }
   }
 
-  /**
-   * Devtool
-   * Reference: http://webpack.github.io/docs/configuration.html#devtool
-   * Type of sourcemap to use per build type
-   */
+   // Devtool
+   // Reference: http://webpack.github.io/docs/configuration.html#devtool
+   // Type of sourcemap to use per build type
   if (TEST) {
     config.devtool = 'inline-source-map';
   } else if (BUILD) {
@@ -75,12 +67,10 @@ module.exports = function makeWebpackConfig(options) {
     config.devtool = 'eval';
   }
 
-  /**
-   * Loaders
-   * Reference: http://webpack.github.io/docs/configuration.html#module-loaders
-   * List: http://webpack.github.io/docs/list-of-loaders.html
-   * This handles most of the magic responsible for converting modules
-   */
+   // Loaders
+   // Reference: http://webpack.github.io/docs/configuration.html#module-loaders
+   // List: http://webpack.github.io/docs/list-of-loaders.html
+   // This handles most of the magic responsible for converting modules
 
   // Initialize module
   config.module = {
@@ -92,8 +82,8 @@ module.exports = function makeWebpackConfig(options) {
         // Transpile .js files using babel-loader
         // Compiles ES6 and ES7 into ES5 code
         test: /\.js$/,
-        loader: 'babel',
-        exclude: /node_modules/
+        loaders: ['ng-annotate', 'babel?presets[]=es2015,cacheDirectory'],
+        exclude: /(node_modules|bower_components)/
       }, {
         // ASSET LOADER
         // Reference: https://github.com/webpack/file-loader
@@ -146,12 +136,21 @@ module.exports = function makeWebpackConfig(options) {
     })
   }
 
-  /**
-   * Plugins
-   * Reference: http://webpack.github.io/docs/configuration.html#plugins
-   * List: http://webpack.github.io/docs/list-of-plugins.html
-   */
-  config.plugins = [];
+  // PostCSS
+  // Reference: https://github.com/postcss/autoprefixer-core
+  // Add vendor prefixes to your css
+  config.postcss = [
+    autoprefixer({
+      browsers: ['last 2 version']
+    })
+  ];
+
+   // Plugins
+   // Reference: http://webpack.github.io/docs/configuration.html#plugins
+   // List: http://webpack.github.io/docs/list-of-plugins.html
+  config.plugins = [
+    // new webpack.ProvidePlugin({})
+  ];
 
   // Skip rendering index.html in test mode
   if (!TEST) {
@@ -183,11 +182,9 @@ module.exports = function makeWebpackConfig(options) {
     )
   }
 
-  /**
-   * Dev server configuration
-   * Reference: http://webpack.github.io/docs/configuration.html#devserver
-   * Reference: http://webpack.github.io/docs/webpack-dev-server.html
-   */
+   // Dev server configuration
+   // Reference: http://webpack.github.io/docs/configuration.html#devserver
+   // Reference: http://webpack.github.io/docs/webpack-dev-server.html
   config.devServer = {
     contentBase: './public',
     stats: {
